@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Basketball Scoring</title>
+        <style>
+            :root {
+                --blue: rgb(20, 20, 180);
+                --lblue: rgb(80, 80, 255);
+                --color1: rgb(255, 0, 0);
+                --colorDark1: red;
+                --txtcolor1: white;
+                --color2: limegreen;
+                --colorDark1: green;
+                --txtcolor2: white;
+                --gray: rgb(60, 60, 60);
+                --lgray: rgb(120, 120, 120);
+            }
+            .header {
+                background-color: var(--blue);
+                padding: 0px;
+                margin: 0;
+                text-align: center;
+                color: white;
+                position: sticky;
+                top: 20px;
+                height: 35px;
+            }
+
+            body {
+                background-color: rgb(230, 230, 230);
+                margin: 0;
+                padding: 0;
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+                user-select: none;
+            }
+
+            .center {
+                margin-left: auto;
+                margin-right: auto;
+                width: 50%;
+                padding: 20px;
+                text-align: center;
+            }
+            .button {
+                width: 100px;
+                height: 20px;
+                position: relative;
+                background-color: var(--lblue);
+                border: none;
+                border-radius: 3px;
+                color: white;
+                cursor: pointer;
+            }
+            .inputBox {
+                width: inherit;
+                width: 8%;
+            }
+            .settingsButton {
+                margin-left: calc(100% - 110px);
+                margin-top: 0px;
+                margin-bottom: 0px;
+                width: 100px;
+                height: 20px;
+                position: relative;
+                top: -45px;
+                background-color: var(--lblue);
+                border: none;
+                border-radius: 3px;
+                color: white;
+                cursor: pointer;
+            }
+            .settingsMenu {
+                height: 550px;
+                width: 200px;
+                margin-top: 8px;
+                margin-left: calc(100% - 210px);
+                background-color: rgb(240, 240, 240);
+                border: solid var(--blue);
+                border-radius: 8px;
+                visibility: hidden;
+                position: fixed;
+                z-index: 2;
+                align-items: center;
+            }
+            .menuItem {
+                width: inherit;
+                width: 85%;
+                margin-top: 10px;
+                margin-left: 15px;
+                text-align: center;
+                margin-bottom: 0px;
+            }
+            .container {
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 2%;
+                /* height: inherit; */
+                width: 90%;
+                background-color: white;
+                border-radius: 8px;
+                display: flex;
+                flex-direction: row;
+                text-align: center;
+                height: 350px;
+            }
+            .team1 {
+                width: 30%;
+                height: inherit;
+                height: 55%;
+                position: relative;
+                top: 5px;
+                left: 10px;
+                margin-top: 5px;
+                background-color: var(--color1);
+                border-radius: 8px;
+                text-align: center;
+            }
+            .team2 {
+                width: 30%;
+                height: inherit;
+                height: 55%;
+                margin-left: calc(40% - 10px);
+                position: relative;
+                top: 5px;
+                /* left: 5px; */
+                margin-top: 5px;
+                background-color: var(--color2);
+                border-radius: 8px;
+                /* justify-content: center; */
+            }
+            .addPointsButton {
+                position: absolute;
+                width: 8%;
+                height: 6%;
+                background-color: var(--color1);
+                border-radius: 8px;
+                border: none;
+                top: inherit;
+                top: 280px;
+                left: calc(5% + 10px);
+                cursor: pointer;
+            }
+            .timeoutButton {
+                position: absolute;
+                width: 27%;
+                height: 6%;
+                background-color: var(--color1);
+                border-radius: 8px;
+                border: none;
+                top: inherit;
+                top: 345px;
+                left: calc(5% + 10px);
+                cursor: pointer;
+            }
+            .span {
+                font-weight: bold; color: white; font-size: 20px; outline: none; border: none;
+            }
+            .timeout {
+                height: 8px;
+                width: inherit;
+                width: 5%;
+                background-color: white;
+                border-radius: 1px;
+                position: absolute;
+                /* width: inherit; */
+                /* left: calc(50% - 4px); */
+                /* margin-left: 4%;
+                margin-right: 4%; */
+            }
+            .arrow {
+                background-color: var(--lblue);
+            }
+            .scoreBoard {
+                width: inherit;
+                width: 200%;
+                height: inherit;
+                /* background-color: red; */
+                margin: 2px;
+            }
+            .scoreBoardLine {
+                position: relative;
+                width: inherit;
+                width: 100%;
+                height: 20%;
+                /* left: 5%; */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                /* background-color: black; */
+            }
+            .scoreBoardBox {
+                width: 100%;
+                height: 90%;
+                background-color: silver;
+                border-radius: 3px;
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-left: 0.5%;
+                margin-right: 0.5%;
+            }
+            .quarterButton {
+                position: absolute;
+                width: 15%;
+                height: 40px;
+                left: 50%;
+                top: 9%;
+                transform: translateX(-50%);
+                background-color: silver;
+                z-index: 11;
+            }
+            #playersContainer1 {
+                background-color: var(--color1);
+                height: 50%;
+                width: 95%;
+                transform: translate(2.5%,5%);
+                border-radius: 8px;
+                display: flex;
+                flex-direction: column;
+                overflow-y: scroll;
+            }
+						#playersContainer2 {
+                background-color: var(--color2);
+                height: 50%;
+                width: 95%;
+                transform: translate(2.5%,0%);
+                border-radius: 8px;
+                display: flex;
+                flex-direction: column;
+                overflow-y: scroll;
+            }
+            #addPlayer1 {
+                order: 2;
+            }
+						#addPlayer2 {
+                order: 2;
+            }
+            .playerLine1 {
+                width: 95%;
+                height: 15%;
+                background-color: var(--colorDark1);
+                margin-left: 2.5%;
+                margin-top: 2.5%;
+                border-radius: 3px;
+                display: flex;
+                flex-direction: row;
+                order: 1;
+                flex: 0 0 auto;
+            }
+						.playerLine2 {
+                width: 95%;
+                height: 15%;
+                background-color: var(--colorDark2);
+                margin-left: 2.5%;
+                margin-top: 2.5%;
+                border-radius: 3px;
+                display: flex;
+                flex-direction: row;
+                order: 1;
+                flex: 0 0 auto;
+            }
+            .playerNameBox {
+                width: 40%;
+                height: 50%;
+                background-color: black;
+                border-radius: 3px;
+                transform: translate(10%, 50%);
+            }
+            .statBox {
+                width: 10%;
+                height: 50%;
+                background-color: black;
+                border-radius: 3px;
+                margin: 0%;
+                margin-left: 3%;
+                transform: translate(45%, 50%);
+            }
+            .delete-button {
+                width: 10%;
+                height: 100%;
+                background-color: black;
+                border-radius: 3px;
+                margin: 0%;
+                margin-left: 3%;
+                margin-right: 5%;
+                transform: translate(65%, 50%);
+            }
+        </style>
+    </head>
+    <body>
+        <h1 class="header" style = 'position: sticky; top: 0px; z-index: 12;'>
+            <span>Basketball</span>
+            <button class = 'settingsButton' style = 'z-index: 13;'>Settings</button>
+        </h1>
+        <div class = 'settingsMenu'>
+            <p class = 'menuItem' style = 'margin-bottom: 35px; font-size: 30px;'>Settings</p>
+            <p class = 'menuItem'>Team 1 Name:</p>
+            <input class = 'inputBox menuItem' style = 'width: inherit; width: 82%;' value = 'Team 1' id = 'team1box'>
+            <p class = 'menuItem'>Team 1 Color:</p>
+            <!-- <input class = 'inputBox menuItem' style = 'width: inherit; width: 82%;' id = 'team1color' placeholder = 'Color...'> -->
+            <div style = 'display: flex; flex-direction: right; align-items: center;'>
+                <button class = 'arrow menuItem button' style = 'width: inherit; width: 39%; margin-right: 0%;' id = 'color1left'><</button>
+                <button class = 'arrow menuItem button' style = 'width: inherit; width: 39%;' id = 'color1right'>></button>
+            </div>
+
+            <p class = 'menuItem'>Team 1 Text Color:</p>
+
+            <div style = 'display: flex; flex-direction: right; align-items: center;'>
+                <button class = 'arrow menuItem button' style = 'width: inherit; width: 39%; margin-right: 0%;' id = 'textcolor1left'><</button>
+                <button class = 'arrow menuItem button' style = 'width: inherit; width: 39%;' id = 'textcolor1right'>></button>
+            </div>
+
+            <p class = 'menuItem' style = 'margin-top: 35px;'>Team 2 Name:</p>
+            <input class = 'inputBox menuItem' style = 'width: inherit; width: 82%;' value = 'Team 2' id = 'team2box'>
+
+            <p class = 'menuItem'>Team 2 Color:</p>
+            <!-- <input class = 'inputBox menuItem' style = 'width: inherit; width: 82%;' id = 'team1color' placeholder = 'Color...'> -->
+            <div style = 'display: flex; flex-direction: right; align-items: center;'>
+                <button class = 'arrow menuItem button' style = 'width: inherit; width: 39%; margin-right: 0%;' id = 'color2left'><</button>
+                <button class = 'arrow menuItem button' style = 'width: inherit; width: 39%;' id = 'color2right'>></button>
+            </div>
+
+            <p class = 'menuItem'>Team 2 Text Color:</p>
+
+            <div style = 'display: flex; flex-direction: right; align-items: center;'>
+                <button class = 'arrow menuItem button' style = 'width: inherit; width: 39%; margin-right: 0%;' id = 'textcolor2left'><</button>
+                <button class = 'arrow menuItem button' style = 'width: inherit; width: 39%;' id = 'textcolor2right'>></button>
+            </div>
+
+            <button class = 'button menuItem' id = 'resetColors' style = 'margin-top: 35px; background-color: red;'>Reset Colors</button>
+            <button class = 'button menuItem' id = 'resetStats' style = 'background-color: red;'>Reset All Stats</button>
+
+        </div>
+
+        <div class = 'container'>
+            <div class = 'team1'>
+                <span class = 'span' style = 'position: relative; top: 5px; font-size: 30px; color: var(--txtcolor1);' id = 'team1text'>Team 1</span>
+                <span class = 'team1Points span' style = 'font-size: 50px; text-align: center; display: block; margin-top: 30px; color: var(--txtcolor1);'>0</span>
+                <div class = 'timeoutCountArea' style = 'margin-top: 40px; display: flex; flex-direction: left; align-items: center; width: inherit;'>
+                    <div class = 'timeout' index = '0' style = 'left: calc(10%); transform: translateX(-50%); background-color: var(--txtcolor1);' team = '1'></div>
+                    <div class = 'timeout' index = '1' style = 'left: calc(23.33%); transform: translateX(-50%); background-color: var(--txtcolor1);' team = '1'></div>
+                    <div class = 'timeout' index = '2' style = 'left: calc(36.66%); transform: translateX(-50%); background-color: var(--txtcolor1);' team = '1'></div>
+                    <div class = 'timeout' index = '3' style = 'left: calc(50%); transform: translateX(-50%); background-color: var(--txtcolor1);' team = '1'></div>
+                    <div class = 'timeout' index = '4' style = 'left: calc(63.33%); transform: translateX(-50%); background-color: var(--txtcolor1);' team = '1'></div>
+                    <div class = 'timeout' index = '5' style = 'left: calc(76.66%); transform: translateX(-50%); background-color: var(--txtcolor1);' team = '1'></div>
+                    <div class = 'timeout' index = '6' style = 'left: calc(90%); transform: translateX(-50%); background-color: var(--txtcolor1);' team = '1'></div>
+                </div>
+            </div>
+            <div class = 'team2'>
+                <span class = 'span' style = 'position: relative; top: 5px; font-size: 30px; color: var(--txtcolor2);' id = 'team2text'>Team 2</span>
+                <span class = 'team2Points span' style = 'font-size: 50px; text-align: center; display: block; margin-top: 30px; color: var(--txtcolor2);'>0</span>
+                <div class = 'timeoutCountArea' style = 'margin-top: 40px; display: flex; flex-direction: left; align-items: center; width: inherit;'>
+                    <div class = 'timeout' index = '0' style = 'left: calc(10%); transform: translateX(-50%); background-color: var(--txtcolor2);' team = '2'></div>
+                    <div class = 'timeout' index = '1' style = 'left: calc(23.33%); transform: translateX(-50%); background-color: var(--txtcolor2);' team = '2'></div>
+                    <div class = 'timeout' index = '2' style = 'left: calc(36.66%); transform: translateX(-50%); background-color: var(--txtcolor2);' team = '2'></div>
+                    <div class = 'timeout' index = '3' style = 'left: calc(50%); transform: translateX(-50%); background-color: var(--txtcolor2);' team = '2'></div>
+                    <div class = 'timeout' index = '4' style = 'left: calc(63.33%); transform: translateX(-50%); background-color: var(--txtcolor2);' team = '2'></div>
+                    <div class = 'timeout' index = '5' style = 'left: calc(76.66%); transform: translateX(-50%); background-color: var(--txtcolor2);' team = '2'></div>
+                    <div class = 'timeout' index = '6' style = 'left: calc(90%); transform: translateX(-50%); background-color: var(--txtcolor2);' team = '2'></div>
+                </div>
+            </div>
+            <button class = 'addPointsButton' valueee = '1' team = '1'>
+                <span class = 'span' style = 'color: var(--txtcolor1);'>+1</span>
+            </button>
+            <button class = 'addPointsButton' style = 'left: calc(14.5% + 10px);' valueee = '2' team = '1'>
+                <span class = 'span' style = 'color: var(--txtcolor1);'>+2</span>
+            </button>
+            <button class = 'addPointsButton' style = 'left: calc(24% + 10px);' valueee = '3' team = '1'>
+                <span class = 'span' style = 'color: var(--txtcolor1);'>+3</span>
+            </button>
+            <button class = 'timeoutButton' style = '' team = '1'>
+                <span class = 'span' style = 'font-size: 20px; color: var(--txtcolor1);'>Timeout</span>
+            </button>
+
+
+            <button class = 'addPointsButton' style = 'left: calc(87% - 10px); background-color: var(--color2);' valueee = '1' team = '2'>
+                <span class = 'span' style = 'color: var(--txtcolor2);'>+1</span>
+            </button>
+            <button class = 'addPointsButton' style = 'left: calc(77.5% - 10px); background-color: var(--color2);' valueee = '2' team = '2'>
+                <span class = 'span' style = 'color: var(--txtcolor2);'>+2</span>
+            </button>
+            <button class = 'addPointsButton' style = 'left: calc(68% - 10px); background-color: var(--color2);' valueee = '3' team = '2'>
+                <span class = 'span' style = 'color: var(--txtcolor2);'>+3</span>
+            </button>
+            <button class = 'timeoutButton' style = 'background-color: var(--color2); left: calc(68% - 10px);' team = '2'>
+                <span class = 'span' style = 'font-size: 20px; color: var(--txtcolor2)'>Timeout</span>
+            </button>
+            
+        </div>
+
+        <div class = 'container' style = 'display: flex; justify-content: center;'>
+            <div class = 'scoreBoard'>
+                <div class = 'scoreBoardLine'>
+                    <div class = 'scoreBoardBox quarterBox' style = 'visibility: shown;'>
+                        <span class = 'span'>T</span>
+                    </div>
+                    <div class = 'scoreBoardBox quarterBox' style = 'background-color: gray;' index = 0>
+                        <span class = 'span' style = ''>1</span>
+                    </div>
+                    <div class = 'scoreBoardBox quarterBox' index = 1>
+                        <span class = 'span' style = ''>2</span>
+                    </div>
+                    <div class = 'scoreBoardBox quarterBox' index = 2>
+                        <span class = 'span' style = ''>3</span>
+                    </div>
+                    <div class = 'scoreBoardBox quarterBox' index = 3>
+                        <span class = 'span' style = ''>4</span>
+                    </div>
+                    <div class = 'scoreBoardBox quarterBox'>
+                        <span class = 'span' style = ''>F</span>
+                    </div>
+                </div>
+
+                <div class = 'scoreBoardLine'>
+                    <div class = 'scoreBoardBox' style = 'background-color: var(--color1)'>
+                        <span class = 'span' style = 'color: var(--txtcolor1)'>T1</span>
+                    </div>
+                    <div class = 'scoreBoardBox' style = 'background-color: var(--color1)' team = 1 index = 0 score = 0>
+                        <span class = 'span' style = 'color: var(--txtcolor1)'>0</span>
+                    </div>
+                    <div class = 'scoreBoardBox' style = 'background-color: var(--color1)' team = 1 index = 1 score = 0>
+                        <span class = 'span' style = 'color: var(--txtcolor1)'>0</span>
+                    </div>
+                    <div class = 'scoreBoardBox' style = 'background-color: var(--color1)' team = 1 index = 2 score = 0>
+                        <span class = 'span' style = 'color: var(--txtcolor1)'>0</span>
+                    </div>
+                    <div class = 'scoreBoardBox' style = 'background-color: var(--color1)' team = 1 index = 3 score = 0>
+                        <span class = 'span' style = 'color: var(--txtcolor1)'>0</span>
+                    </div>
+                    <div class = 'scoreBoardBox' style = 'background-color: var(--color1)' team = 1 index = 4 score = 0>
+                        <span class = 'span' style = 'color: var(--txtcolor1)'>0</span>
+                    </div>
+                </div>
+
+                <div class = 'scoreBoardLine'>
+                    <div class = 'scoreBoardBox' style = 'background-color: var(--color2)'>
+                        <span class = 'span' style = 'color: var(--txtcolor2)'>T2</span>
+                    </div>
+                    <div class = 'scoreBoardBox' style = 'background-color: var(--color2)' team = 2 index = 0 score = 0>
+                        <span class = 'span' style = 'color: var(--txtcolor2)'>0</span>
+                    </div>
+                    <div class = 'scoreBoardBox' style = 'background-color: var(--color2)' team = 2 index = 1 score = 0>
+                        <span class = 'span' style = 'color: var(--txtcolor2)'>0</span>
+                    </div>
+                    <div class = 'scoreBoardBox' style = 'background-color: var(--color2)' team = 2 index = 2 score = 0>
+    <span class = 'span' style = 'color: var(--txtcolor2)'>0</span>
+                    </div>
+                    <div class = 'scoreBoardBox' style = 'background-color: var(--color2)' team = 2 index = 3 score = 0>
+                        <span class = 'span' style = 'color: var(--txtcolor2)'>0</span>
+                    </div>
+                    <div class = 'scoreBoardBox' style = 'background-color: var(--color2)' team = '2' index = 4 score = 0>
+                        <span class = 'span' style = 'color: var(--txtcolor2)'>0</span>
+                    </div>
+                </div>
+
+            </div>
+            <button class = 'button quarterButton' style = 'position: absolute; top: inherit; left: inherit; transform: translate(0%, 420%); width: 150px; height: 60px;'>
+                <span class = 'span' style = 'color: white;'>Quarter 1</span>
+            </button>
+        </div>
+
+        <div class = "container" style = 'flex-direction: column; height: 750px;'>
+            <div id = 'playersContainer1' style = 'margin-bottom: 40px;'>
+                <div id = 'infoLine1' style = 'margin-top: 10px; display: flex; flex-direction: right; width: 95%; position: relative; left: 2.5%;'>
+                    <span class = 'span' style = 'position: relative; transform: translateX(calc(10%)); width: 40%; margin-right: 3.5%;'>Player Name</span>
+                    <span class = 'span' style = 'position: relative; transform: translateX(calc(10%)); width: 10%; margin-left: 3%;'>Stat</span>
+                    <span class = 'span' style = 'position: relative; transform: translateX(calc(10%)); width: 10%; margin-left: 3%;'>Stat</span>
+                    <span class = 'span' style = 'position: relative; transform: translateX(calc(10%)); width: 10%; margin-left: 3%;'>Stat</span>
+                    <span class = 'span' style = 'position: relative; transform: translateX(calc(10%)); width: 10%; margin-left: 3%;'>Stat</span>
+                </div>
+                
+                <div class = 'playerLine1'>
+                    <div class = 'playerNameBox'>
+                        <input class = 'span' placeholder = 'Player Name' style = 'background-color: rgba(0, 0, 0, 0);  width: 100%; outline: none; text-align: center;'>
+                    </div>
+                    <div class = 'statBox'>
+                        <input class = 'span' value = '0' style = 'background-color: rgba(0, 0, 0, 0);  width: 100%; outline: none; text-align: center;'>
+                    </div>
+                    <div class = 'statBox'>
+                        <input class = 'span' value = '0' style = 'background-color: rgba(0, 0, 0, 0);  width: 100%; outline: none; text-align: center;'>
+                    </div>
+                    <div class = 'statBox'>
+                        <input class = 'span' value = '0' style = 'background-color: rgba(0, 0, 0, 0);  width: 100%; outline: none; text-align: center;'>
+                    </div>
+                    <div class = 'statBox'>
+                        <input class = 'span' value = '0' style = 'background-color: rgba(0, 0, 0, 0);  width: 100%; outline: none; text-align: center;'>
+                    </div>
+                    <!-- <div class = 'delete-button'></div> -->
+                </div>
+
+                <button id = 'addPlayer1' style = 'background-color: var(--colorDark1); height: 15%; width: 10%; margin: 2.5%; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer;'>
+                    <span class = 'span' style = 'font-size: 30px; position: relative; top: 1px;'>+</span>
+                </button>
+            </div>
+						
+						<!--                 here                       -->
+						
+						<div id = 'playersContainer2' style = 'margin-bottom: 20px;'>
+                <div id = 'infoLine1' style = 'margin-top: 10px; display: flex; flex-direction: right; width: 95%; position: relative; left: 2.5%;'>
+                    <span class = 'span' style = 'position: relative; transform: translateX(calc(10%)); width: 40%; margin-right: 3.5%;'>Player Name</span>
+                    <span class = 'span' style = 'position: relative; transform: translateX(calc(10%)); width: 10%; margin-left: 3%;'>Stat</span>
+                    <span class = 'span' style = 'position: relative; transform: translateX(calc(10%)); width: 10%; margin-left: 3%;'>Stat</span>
+                    <span class = 'span' style = 'position: relative; transform: translateX(calc(10%)); width: 10%; margin-left: 3%;'>Stat</span>
+                    <span class = 'span' style = 'position: relative; transform: translateX(calc(10%)); width: 10%; margin-left: 3%;'>Stat</span>
+                </div>
+                
+                <div class = 'playerLine2'>
+                    <div class = 'playerNameBox'>
+                        <input class = 'span' placeholder = 'Player Name' style = 'background-color: rgba(0, 0, 0, 0);  width: 100%; outline: none; text-align: center;'>
+                    </div>
+                    <div class = 'statBox'>
+                        <input class = 'span' value = '0' style = 'background-color: rgba(0, 0, 0, 0);  width: 100%; outline: none; text-align: center;'>
+                    </div>
+                    <div class = 'statBox'>
+                        <input class = 'span' value = '0' style = 'background-color: rgba(0, 0, 0, 0);  width: 100%; outline: none; text-align: center;'>
+                    </div>
+                    <div class = 'statBox'>
+                        <input class = 'span' value = '0' style = 'background-color: rgba(0, 0, 0, 0);  width: 100%; outline: none; text-align: center;'>
+                    </div>
+                    <div class = 'statBox'>
+                        <input class = 'span' value = '0' style = 'background-color: rgba(0, 0, 0, 0);  width: 100%; outline: none; text-align: center;'>
+                    </div>
+                </div>
+
+                <button id = 'addPlayer2' style = 'background-color: var(--colorDark2); height: 15%; width: 10%; margin: 2.5%; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer;'>
+                    <span class = 'span' style = 'font-size: 30px; position: relative; top: 1px;'>+</span>
+                </button>
+            </div>
+        </div>
+
+        <p class = 'temp' style = 'visibility: hidden; position: absolute;'></p>
+
+        <script>
+            function getRGB(color) {
+                let temp = document.querySelector('.temp');
+                temp.style.color = color;
+                let rgb = getComputedStyle(temp).color;
+                return rgb;
+            }
+
+            function darken(rgb) {
+                let string = rgb
+                    .replace('rgb(', '[')
+                    .replace(')', ']');
+                
+                let array = JSON.parse(string);
+                
+                let r = array[0];
+                let g = array[1];
+                let b = array[2];
+                
+                // alert(`String: ${string}`);
+                // alert(`${r}, ${g}, ${b}`);
+
+                let oldRGB = [r, g, b];
+                let newRGB = [];
+                
+                oldRGB.forEach(function(value) {
+                    value -= 50;
+                    if (value < 0) {
+                        value = 0;
+                    }
+                    if (value > 255) {
+                        value = 255;
+                    }
+                    newRGB.push(value);
+                });
+
+                r = newRGB[0];
+                g = newRGB[1];
+                b = newRGB[2];
+
+                return `rgb(${r}, ${g}, ${b})`;
+            }
+            
+            function resetDarkColors() {
+                let root = document.documentElement;
+                let color1 = getComputedStyle(root).getPropertyValue('--color1').trim();
+                let color2 = getComputedStyle(root).getPropertyValue('--color2').trim();
+                let darkerColor1 = darken(getRGB(color1));
+                // alert(`Color: ${color1}, darker color: ${darkerColor1}`)
+                let darkerColor2 = darken(getRGB(color2));
+                
+                root.style.setProperty('--colorDark1', darkerColor1);
+                root.style.setProperty('--colorDark2', darkerColor2);
+            }
+
+            resetDarkColors();
+
+            const addPlayer1 = document.getElementById('addPlayer1');
+            const playerLine1 = document.querySelector('.playerLine1');
+            const pContainer1 = document.getElementById('playersContainer1');
+						
+						playerLine1.addEventListener('click', function() {
+								if (altMode) {
+										playerLine1.remove();
+								}
+						})
+
+            addPlayer1.addEventListener('click', function() {
+                let newLine = playerLine1.cloneNode(true);
+                pContainer1.appendChild(newLine);
+								
+								newLine.addEventListener('click', function() {
+										if (altMode) {
+												newLine.remove();
+										}
+								})
+            })
+						
+						const addPlayer2 = document.getElementById('addPlayer2');
+            const playerLine2 = document.querySelector('.playerLine2');
+            const pContainer2 = document.getElementById('playersContainer2');
+						
+						playerLine2.addEventListener('click', function() {
+								if (altMode) {
+										playerLine2.remove();
+								}
+						})
+
+            addPlayer2.addEventListener('click', function() {
+                let newLine = playerLine2.cloneNode(true);
+                pContainer2.appendChild(newLine);
+								
+								newLine.addEventListener('click', function() {
+										if (altMode) {
+												newLine.remove();
+										}
+								})
+            })
+
+            const allElements = document.querySelectorAll('*');
+            allElements.forEach(el => {
+                el.addEventListener('contextmenu', function(event) {
+                    event.preventDefault();
+                    el.click();
+                })
+            })
+
+            // document.addEventListener('contextmenu', function(event) {
+            //     event.preventDefault();
+            //     click();
+            // })
+
+            var team1points = 0
+            var team2points = 0
+            function toggleVisible(el) {
+                // alert(getComputedStyle(el).visibility)
+                if (getComputedStyle(el).visibility == 'hidden') {
+                    el.style.visibility = 'visible';
+                } else {
+                    el.style.visibility = 'hidden';
+                }
+            }
+
+            const pointsTeam1 = document.querySelector('.team1Points');
+            const pointsTeam2 = document.querySelector('.team2Points');
+
+            const settingsButton = document.querySelector('.settingsButton');
+            const settingsMenu = document.querySelector('.settingsMenu');
+            settingsButton.addEventListener('click', function() {
+                toggleVisible(settingsMenu);
+            })
+
+            // SCOREBOARD
+
+            var quarter = 1;
+
+            const team1scores = Array.from(document.querySelectorAll('.scoreBoardBox')).filter(score => score.getAttribute('team') == '1');
+            const team2scores = Array.from(document.querySelectorAll('.scoreBoardBox')).filter(score => score.getAttribute('team') == '2');
+
+            function getCurrentScoreboard(team) {
+                let sb = Array.from(document.querySelectorAll('.scoreBoardBox')).filter(score => score.getAttribute('team') == team && score.getAttribute('index') == (quarter - 1))[0];
+                return sb;
+            }
+
+            function addPointsToScoreboard(team, points) {
+                let scoreboard = getCurrentScoreboard(team);
+                let score = scoreboard.getAttribute('score');
+                scoreboard.setAttribute('score', parseInt(score) + points);
+                scoreboard.querySelector('span').textContent = scoreboard.getAttribute('score');
+
+                let finalScoreboard = Array.from(document.querySelectorAll('.scoreBoardBox')).filter(score => score.getAttribute('index') == 4 && score.getAttribute('team') == team)[0];
+
+                score = finalScoreboard.getAttribute('score');
+                finalScoreboard.setAttribute('score', parseInt(score) + points);
+                finalScoreboard.querySelector('span').textContent = finalScoreboard.getAttribute('score');
+            }
+
+            function setSelectedQuarter() {
+                let allScores = document.querySelectorAll('.quarterBox');
+                for (let score of allScores) {
+                    score.style.backgroundColor = 'silver';
+                }
+            
+                let scoreboard = Array.from(document.querySelectorAll('.quarterBox')).filter(score => parseInt(score.getAttribute('index')) == quarter - 1)[0];
+
+                scoreboard.style.backgroundColor = 'gray';
+            }
+
+            var pointsButtons = document.querySelectorAll('.addPointsButton');
+            for (let button of pointsButtons) {
+                button.addEventListener('click', function() {
+                    let team = parseInt(button.getAttribute('team'));
+                    let value = parseInt(button.getAttribute('valueee'));
+                    if (button.getAttribute('team') == '1') {
+                        team1points += value;
+                        action(['points', 1, value]);
+                    } else {
+                        team2points += value;
+                        action(['points', 2, value]);
+                    }
+                    
+                    pointsTeam1.textContent = team1points;
+                    pointsTeam2.textContent = team2points;
+
+                    addPointsToScoreboard(team, value);
+                })
+            }
+
+            // [type, team, value]
+            // [1, 3], [2, 2], [2, 3]
+
+            const quarterButtons = document.querySelectorAll('.quarterButton');
+
+            for (let btn of quarterButtons) {
+                btn.addEventListener('click', function() {
+                    quarter++;
+
+                    if (quarter > 4) {
+                        quarter = 1;
+                    }
+
+                    setSelectedQuarter();
+                    
+                    for (let bttn of quarterButtons) {
+                        bttn.querySelector('.span').textContent = `Quarter ${quarter}`;
+                    }
+                })
+            }
+
+            
+
+            var lastActions = []
+
+            function action(action) {
+                lastActions.unshift(action);
+            }
+
+            function undoLastAction() {
+                if (lastActions.length <= 0) {
+                    console.error('Error: No actions to undo!')
+                    return;
+                }
+
+                let lastAction = lastActions[0];
+                let actionType = lastAction[0];
+
+                if (actionType == 'points') {
+                    let team = lastAction[1];
+                    let value = lastAction[2];
+
+                    // alert(`team: ${team} value: ${value}`);
+
+                    if (team == 1) {
+                        team1points -= value;
+                    } else {
+                        team2points -= value;
+                    }
+
+                    pointsTeam1.textContent = team1points;
+                    pointsTeam2.textContent = team2points;
+                } else if (actionType == 'timeout') {
+                    let team = lastAction[1];
+                    let timeout = lastAction[2];
+                    console.log(timeout);
+                    timeout.style.visibility = 'visible';
+                    timeout.setAttribute('used', 'false');
+                } else if (actionType == 'untimeout') {
+                    let team = lastAction[1];
+                    let timeout = lastAction[2];
+                    console.log(timeout);
+                    timeout.style.visibility = 'hidden';
+                    timeout.setAttribute('used', 'true');
+                }
+                lastActions = lastActions.slice(1, lastActions.length);
+            }
+
+            document.addEventListener('keydown', function(event) {
+                if (event.ctrlKey && event.key == 'z') {
+                    undoLastAction();
+                }
+            })
+
+            const team1box = document.getElementById('team1box');
+            const team2box = document.getElementById('team2box');
+            const team1text = document.getElementById('team1text');
+            const team2text = document.getElementById('team2text');
+
+            team1box.addEventListener('input', function() {
+                team1text.textContent = event.target.value;
+                if (event.target.value == '') {
+                    team1text.textContent = 'Team 1';
+                }
+            })
+
+            team2box.addEventListener('input', function() {
+                team2text.textContent = event.target.value;
+                if (event.target.value == '') {
+                    team2text.textContent = 'Team 2';
+                }
+            })
+
+            const timeoutArea = document.querySelector('.timeoutCountArea')
+            const timeouts = document.querySelectorAll('.timeout');
+
+            const timeoutButtons = document.querySelectorAll('.timeoutButton')
+            for (let button of timeoutButtons) {
+                button.addEventListener('click', function() {
+                    let team = button.getAttribute('team');
+                    if (!altMode) {
+                        useTimeout(parseInt(team));
+                    } else {
+                        addTimeout(parseInt(team));
+                    }
+                })
+            }
+
+            var lastTimeout = null;
+
+            function useTimeout(team) {
+                // console.log(team);
+                let validTimeouts = [];
+                for (let timeout of Array.from(timeouts)) {
+                    if (parseInt(timeout.getAttribute('team')) == team && timeout.getAttribute('used') != 'true') {
+                        validTimeouts.push(timeout);
+                    }
+                }
+                // console.log(validTimeouts);
+                // validTimeouts = validTimeouts.filter(to => to.getAttribute('team') == team);
+
+                let index = validTimeouts.length - 1;
+                let firstTimeout = validTimeouts[index];
+                firstTimeout.setAttribute('used', 'true');
+                firstTimeout.style.visibility = 'hidden';
+                action(['timeout', team, firstTimeout]);
+                // lastTimeout = firstTimeout;
+            }
+
+            function addTimeout(team) {
+                let validTimeouts = [];
+                for (let timeout of Array.from(timeouts)) {
+                    if (parseInt(timeout.getAttribute('team')) == team && timeout.getAttribute('used') == 'true') {
+                        validTimeouts.push(timeout);
+                    }
+                }
+
+                let index = validTimeouts.length - 1;
+                let firstTimeout = validTimeouts[0]
+                console.log(firstTimeout);
+                firstTimeout.style.visibility = 'visible';
+                firstTimeout.setAttribute('used','false');
+                action(['untimeout', team, firstTimeout]);
+            }
+
+            const resetStats = document.getElementById('resetStats');
+
+            const root = document.documentElement;
+            const color1 = getComputedStyle(root).getPropertyValue('--color1').trim();
+            const color2 = getComputedStyle(root).getPropertyValue('--color2').trim();
+
+            const color1left = document.getElementById('color1left');
+            const color1lright = document.getElementById('color1lright');
+            const textcolor1left = document.getElementById('textcolor1left');
+            const textcolor1right = document.getElementById('textcolor1right');
+
+            const colors = [
+                // Neutrals
+                'black', 'gray', 'white', 'silver',
+
+                // Reds and Pinks
+                'maroon', 'red', 'crimson', 'magenta', 'hotpink', 'pink',
+
+                // Oranges and Browns
+                'orangered', 'orange', 'darkorange', 'peru', 'saddlebrown',
+
+                // Yellows and Golds
+                'gold', 'yellow', 'khaki', 'lightyellow',
+
+                // Greens
+                'olive', 'darkolivegreen', 'green', 'lime', 'limegreen', 'palegreen', 'lightgreen',
+
+                // Cyans and Aquas
+                'teal', 'darkcyan', 'cyan', 'lightcyan', 'aqua', 'aquamarine', 'paleturquoise',
+
+                // Blues
+                'navy', 'darkblue', 'mediumblue', 'blue', 'royalblue', 'dodgerblue', 'deepskyblue', 'skyblue', 'lightskyblue', 'lightblue',
+
+                // Purples
+                'purple', 'indigo', 'darkviolet', 'blueviolet', 'mediumpurple', 'orchid', 'violet', 'plum', 'lavender'
+            ];
+
+            const textColors = ['white', 'silver', 'gray', 'black', 'red', 'blue', 'orange', 'yellow', 'purple', 'skyblue', 'green', 'teal', 'limegreen', 'darkolivegreen', 'gold', 'navy', 'hotpink']
+
+            var textColorIndex1 = 0;
+            var curColorIndex1 = 5;
+
+            color1left.addEventListener('click', function() {
+                curColorIndex1--;
+                if (curColorIndex1 > colors.length - 1) {
+                    curColorIndex1 = 0;
+                } else if (curColorIndex1 < 0) {
+                    curColorIndex1 = colors.length - 1;
+                }
+
+                var currentColor1 = colors[curColorIndex1];
+                root.style.setProperty('--color1', currentColor1);
+                resetDarkColors();
+            })
+
+            color1right.addEventListener('click', function() {
+                curColorIndex1++;
+                if (curColorIndex1 > colors.length - 1) {
+                    curColorIndex1 = 0;
+                } else if (curColorIndex1 < 0) {
+                    curColorIndex1 = colors.length - 1;
+                }
+
+                var currentColor1 = colors[curColorIndex1];
+                root.style.setProperty('--color1', currentColor1);
+                resetDarkColors();
+            })
+
+            textcolor1left.addEventListener('click', function() {
+                textColorIndex1--;
+                if (textColorIndex1 > textColors.length - 1) {
+                    textColorIndex1 = 0;
+                } else if (textColorIndex1 < 0) {
+                    textColorIndex1 = textColors.length - 1;
+                }
+                // alert(textColorIndex1);
+                var currentTextColor1 = textColors[textColorIndex1];
+                root.style.setProperty('--txtcolor1', currentTextColor1);
+                resetDarkColors();
+            })
+
+            textcolor1right.addEventListener('click', function() {
+                textColorIndex1++;
+                if (textColorIndex1 > textColors.length - 1) {
+                    textColorIndex1 = 0;
+                } else if (textColorIndex1 < 0) {
+                    textColorIndex1 = textColors.length - 1;
+                }
+                // alert(textColorIndex1);
+                var currentTextColor1 = textColors[textColorIndex1];
+                root.style.setProperty('--txtcolor1', currentTextColor1);
+                resetDarkColors();
+            })
+
+
+
+            var textColorIndex2 = 0;
+            var curColorIndex2 = 23;
+
+            color2left.addEventListener('click', function() {
+                curColorIndex2--;
+                if (curColorIndex2 > colors.length - 1) {
+                    curColorIndex2 = 0;
+                } else if (curColorIndex2 < 0) {
+                    curColorIndex2 = colors.length - 1;
+                }
+
+                var currentColor2 = colors[curColorIndex2];
+                root.style.setProperty('--color2', currentColor2);
+                resetDarkColors();
+            })
+
+            color2right.addEventListener('click', function() {
+                curColorIndex2++;
+                if (curColorIndex2 > colors.length - 1) {
+                    curColorIndex2 = 0;
+                } else if (curColorIndex2 < 0) {
+                    curColorIndex2 = colors.length - 1;
+                }
+
+                var currentColor2 = colors[curColorIndex2];
+                root.style.setProperty('--color2', currentColor2);
+                resetDarkColors();
+            })
+
+            textcolor2left.addEventListener('click', function() {
+                textColorIndex2--;
+                if (textColorIndex2 > textColors.length - 1) {
+                    textColorIndex2 = 0;
+                } else if (textColorIndex2 < 0) {
+                    textColorIndex2 = textColors.length - 1;
+                }
+                var currentTextColor2 = textColors[textColorIndex2];
+                root.style.setProperty('--txtcolor2', currentTextColor2);
+                resetDarkColors();
+            })
+
+            textcolor2right.addEventListener('click', function() {
+                textColorIndex2++;
+                if (textColorIndex2 > textColors.length - 1) {
+                    textColorIndex2 = 0;
+                } else if (textColorIndex2 < 0) {
+                    textColorIndex2 = textColors.length - 1;
+                }
+                var currentTextColor2 = textColors[textColorIndex2];
+                root.style.setProperty('--txtcolor2', currentTextColor2);
+                resetDarkColors();
+            })
+
+            const resetColors = document.getElementById('resetColors');
+
+            resetColors.addEventListener('click', function() {
+                textColorIndex1 = 0;
+                curColorIndex1 = 5;
+                textColorIndex2 = 0;
+                curColorIndex2 = 23;
+                root.style.setProperty('--color1', colors[curColorIndex1]);
+                root.style.setProperty('--txtcolor1', textColors[textColorIndex1]);
+                root.style.setProperty('--color2', colors[curColorIndex2]);
+                root.style.setProperty('--txtcolor2', textColors[textColorIndex2]);
+
+                resetDarkColors();
+            })
+
+            var altMode = false;
+
+            document.addEventListener('keydown', function(event) {
+                if (event.key != 'Alt' || altDown) {
+                    return;
+                }
+
+                event.preventDefault();
+
+                altDown = true;
+
+                if (!altMode) {
+                    for (let button of pointsButtons) {
+                        let span = button.querySelector('.span');
+                        span.textContent = `-${button.getAttribute('valueee')}`
+                        button.setAttribute('valueee', - parseInt(button.getAttribute('valueee')))
+                    }
+                    for (let button of timeoutButtons) {
+                        let span = button.querySelector('.span');
+                        span.textContent = 'Untimeout';
+                    }
+                } else {
+                    
+                }
+
+                altMode = true;
+            })
+
+            document.addEventListener('keyup', function(event) {
+                if (event.key == 'Alt') {
+                    altDown = false;
+                    for (let button of pointsButtons) {
+                        let value = parseInt(button.getAttribute('valueee'));
+                        let span = button.querySelector('.span');
+                        span.textContent = '+' + Math.abs(value);
+                        button.setAttribute('valueee', Math.abs(value));
+                    }
+                    for (let button of timeoutButtons) {
+                        let span = button.querySelector('.span');
+                        span.textContent = 'Timeout';
+                    }
+                }
+                altMode = false;
+            })
+
+        </script>
+    </body>
+</html>
