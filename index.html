@@ -98,7 +98,7 @@
                 margin-top: 2%;
                 /* height: inherit; */
                 width: 90%;
-                background-color: white;
+                background-color: rgb(240, 240, 240);
                 border-radius: 8px;
                 display: flex;
                 flex-direction: row;
@@ -155,7 +155,10 @@
                 cursor: pointer;
             }
             .span {
-                font-weight: bold; color: white; font-size: 20px; outline: none; border: none;
+                font-weight: bold; color: white; font-size: 20px; border: none;
+								
+								/* text-shadow: 2px 2px 2px black; */
+								/* text-shadow: 0px 0px 5px black; */
             }
             .timeout {
                 height: 8px;
@@ -284,6 +287,16 @@
                 margin-left: 1.5%;
                 transform: translate(45%, 50%);
             }
+						.statText {
+							 /* text-shadow: 0px 0px 5px black; */
+							 color: var(--txtcolor1);
+							 border-radius: 8px;
+						}
+						.statText2 {
+							/* background-color: var(--colorDark2); */
+							color: var(--txtcolor2);
+							border-radius: 8px;
+						}
             .delete-button {
                 width: 10%;
                 height: 100%;
@@ -480,13 +493,13 @@
         <div class = "container" style = 'flex-direction: column; height: 750px;'>
             <div id = 'playersContainer1' style = 'margin-bottom: 40px;'>
                 <div id = 'infoLine1' style = 'margin-top: 10px; display: flex; flex-direction: right; width: 95%; position: relative; left: 2.5%;'>
-                    <span class = 'span' style = 'position: relative; transform: translateX(calc(10%)); width: 40%; margin: 0%; margin-right: 3.5%;'>Player Name</span>
-                    <span class = 'span' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>Points</span>
-                    <span class = 'span' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>Rebounds</span>
-                    <span class = 'span' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>Assists</span>
-                    <span class = 'span' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>3 Pointers</span>
-										<span class = 'span' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>Free Throws</span>
-										<span class = 'span' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>Fouls</span>
+                    <span class = 'span statText' style = 'position: relative; transform: translateX(calc(10%)); width: 40%; margin: 0%; margin-right: 3.5%;'>Player Name</span>
+                    <span class = 'span statText' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>Points</span>
+                    <span class = 'span statText' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>Rebounds</span>
+                    <span class = 'span statText' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>Assists</span>
+                    <span class = 'span statText' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>3 Pointers</span>
+										<span class = 'span statText' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>Free Throws</span>
+										<span class = 'span statText' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>Fouls</span>
                 </div>
                 
                 <div class = 'playerLine1'>
@@ -523,13 +536,13 @@
 						
 						<div id = 'playersContainer2' style = 'margin-bottom: 20px;'>
                 <div id = 'infoLine1' style = 'margin-top: 10px; display: flex; flex-direction: right; width: 95%; position: relative; left: 2.5%;'>
-                    <span class = 'span' style = 'position: relative; transform: translateX(calc(10%)); width: 40%; margin: 0%; margin-right: 3.5%;'>Player Name</span>
-                    <span class = 'span' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>Points</span>
-                    <span class = 'span' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>Rebounds</span>
-                    <span class = 'span' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>Assists</span>
-                    <span class = 'span' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>3 Pointers</span>
-										<span class = 'span' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>Free Throws</span>
-										<span class = 'span' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>Fouls</span>
+                    <span class = 'span statText2' style = 'position: relative; transform: translateX(calc(10%)); width: 40%; margin: 0%; margin-right: 3.5%;'>Player Name</span>
+                    <span class = 'span statText2' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>Points</span>
+                    <span class = 'span statText2' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>Rebounds</span>
+                    <span class = 'span statText2' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>Assists</span>
+                    <span class = 'span statText2' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>3 Pointers</span>
+										<span class = 'span statText2' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>Free Throws</span>
+										<span class = 'span statText2' style = 'position: relative; transform: translateX(calc(0%)); width: 7.5%; margin: 0%;  margin-left: 1.5%; font-size: 16px; text-align: center;'>Fouls</span>
                 </div>
                 
                 <div class = 'playerLine2'>
