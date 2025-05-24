@@ -29,7 +29,7 @@
             }
 
             body {
-                background-color: rgb(230, 230, 230);
+                background-color: rgb(160, 160, 160);
                 margin: 0;
                 padding: 0;
                 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
@@ -352,7 +352,9 @@
 
             <button class = 'button menuItem' id = 'resetColors' style = 'margin-top: 35px; background-color: red;'>Reset Colors</button>
             <button class = 'button menuItem' id = 'resetStats' style = 'background-color: red;'>Reset Stats</button>
-						
+						<p class = 'menuItem'>Background Brightness:</p>
+						<p class = 'menuItem'>(0 - 255)</p>
+						<input class = 'inputBox menuItem' style = 'width: inherit; width: 82%;' value = '210' id = 'bgColorInput' placeholder = '0 - 255'>
         </div>
 
         <div class = 'container'>
@@ -579,6 +581,18 @@
         <p class = 'temp' style = 'visibility: hidden; position: absolute;'></p>
 
         <script>
+						let containers = document.querySelectorAll('.container')
+						let bgColorInput = document.getElementById('bgColorInput')
+						
+						bgColorInput.addEventListener('input', function() {
+								let bgColorInputValue = bgColorInput.value;
+								for (let container of containers) {
+										container.style.backgroundColor = `rgb(${bgColorInputValue}, ${bgColorInputValue}, ${bgColorInputValue})`;
+								}
+								
+								document.body.style.backgroundColor = darken(`rgb(${bgColorInputValue}, ${bgColorInputValue}, ${bgColorInputValue})`);
+						})
+						
             function getRGB(color) {
                 let temp = document.querySelector('.temp');
                 temp.style.color = color;
@@ -586,7 +600,7 @@
                 return rgb;
             }
 
-            function darken(rgb) {
+            function darken(rgb, howMuch = 50) {
                 let string = rgb
                     .replace('rgb(', '[')
                     .replace(')', ']');
@@ -604,7 +618,7 @@
                 let newRGB = [];
                 
                 oldRGB.forEach(function(value) {
-                    value -= 50;
+                    value -= howMuch;
                     if (value < 0) {
                         value = 0;
                     }
