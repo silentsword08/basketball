@@ -33,6 +33,11 @@
                 margin: 0;
                 padding: 0;
                 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+/* 								font-optical-sizing: auto;
+								font-weight: 300;
+								font-style: normal; */
+								/* font-weight: 400;
+								font-style: normal; */
                 user-select: none;
 								overflow-x: hidden;
             }
@@ -160,7 +165,9 @@
             }
             .span {
                 font-weight: bold; color: white; font-size: 20px; border: none;
-								
+								/* font-family: "Nanum Gothic", sans-serif;
+								font-weight: 400;
+								font-style: normal; */
 								/* text-shadow: 2px 2px 2px black; */
 								/* text-shadow: 0px 0px 5px black; */
             }
@@ -366,7 +373,10 @@
 						<input class = 'inputBox menuItem' style = 'width: inherit; width: 82%;' value = '210' id = 'bgColorInput' placeholder = '0 - 255'>
 						
             <button class = 'button menuItem' id = 'resetColors' style = 'margin-top: 35px; background-color: red;'>Reset Colors</button>
-            <button class = 'button menuItem' id = 'resetStats' style = 'background-color: red; margin-bottom: 10px;'>Reset Stats</button>
+            <button class = 'button menuItem' id = 'resetStats' style = 'background-color: red;'>Reset Stats</button>
+						
+						<p class = 'menuItem'>Font:</p>
+						<input class = 'inputBox menuItem' style = 'width: inherit; width: 82%;  margin-bottom: 10px;' value = 'Gill Sans' id = 'fontInput' placeholder = ''>
         </div>
 
         <div class = 'container'>
@@ -593,8 +603,39 @@
         <p class = 'temp' style = 'visibility: hidden; position: absolute;'></p>
 
         <script>
-						let containers = document.querySelectorAll('.container')
-						let bgColorInput = document.getElementById('bgColorInput')
+						function changeFont(fontName) {
+								// Remove any existing font link
+								const oldLink = document.getElementById('dynamicFont');
+								if (oldLink) {
+										oldLink.remove();
+								}
+
+								// Create new link tag
+								const link = document.createElement('link');
+								link.id = 'dynamicFont';
+								link.rel = 'stylesheet';
+								link.href = `https://fonts.googleapis.com/css2?family=${fontName.replace(/\s+/g, '+')}&display=swap`;
+								document.head.appendChild(link);
+
+								// Set font family after a short delay (fonts load asynchronously)
+								setTimeout(() => {
+										document.body.style.fontFamily = `"${fontName}", sans-serif`;
+								}, 200);
+								
+								for (let el of document.querySelectorAll('*')) {
+										el.style.fontFamily = `"${fontName}", sans-serif`;
+								}
+						}
+
+				
+						let fontInput = document.getElementById('fontInput');
+						fontInput.addEventListener('input', function() {
+								/* document.body.style.fontFamily = `'${fontInput.value}', 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;` */
+								changeFont(fontInput.value)
+						})
+				
+						let containers = document.querySelectorAll('.container');
+						let bgColorInput = document.getElementById('bgColorInput');
 						
 						bgColorInput.addEventListener('input', function() {
 								let bgColorInputValue = bgColorInput.value;
