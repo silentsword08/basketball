@@ -73,7 +73,7 @@
                 cursor: pointer;
             }
             .settingsMenu {
-                height: 850px;
+                height: 80%;
                 width: 200px;
                 margin-top: 8px;
                 margin-left: calc(100% - 210px);
@@ -84,6 +84,8 @@
                 position: fixed;
                 z-index: 2;
                 align-items: center;
+								overflow: scroll;
+								overflow-x: hidden;
             }
             .menuItem {
                 width: inherit;
@@ -364,7 +366,7 @@
 						<input class = 'inputBox menuItem' style = 'width: inherit; width: 82%;' value = '210' id = 'bgColorInput' placeholder = '0 - 255'>
 						
             <button class = 'button menuItem' id = 'resetColors' style = 'margin-top: 35px; background-color: red;'>Reset Colors</button>
-            <button class = 'button menuItem' id = 'resetStats' style = 'background-color: red;'>Reset Stats</button>
+            <button class = 'button menuItem' id = 'resetStats' style = 'background-color: red; margin-bottom: 10px;'>Reset Stats</button>
         </div>
 
         <div class = 'container'>
