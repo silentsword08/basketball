@@ -20,7 +20,7 @@
             .header {
                 background-color: var(--blue);
                 padding: 0px;
-                margin: 0;
+                margin: 0px;
                 text-align: center;
                 color: white;
                 position: sticky;
@@ -34,6 +34,7 @@
                 padding: 0;
                 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
                 user-select: none;
+								overflow-x: hidden;
             }
 
             .center {
@@ -72,7 +73,7 @@
                 cursor: pointer;
             }
             .settingsMenu {
-                height: 650px;
+                height: 850px;
                 width: 200px;
                 margin-top: 8px;
                 margin-left: calc(100% - 210px);
@@ -316,7 +317,7 @@
             <button class = 'settingsButton' style = 'z-index: 13;'>Settings</button>
         </h1>
         <div class = 'settingsMenu'>
-            <p class = 'menuItem' style = 'margin-bottom: 35px; font-size: 30px;'>Settings</p>
+            <p class = 'menuItem' style = 'margin-bottom: 5px; font-size: 20px;'>Settings</p>
             <p class = 'menuItem'>Team 1 Name:</p>
             <input class = 'inputBox menuItem' style = 'width: inherit; width: 82%;' value = 'Team 1' id = 'team1box'>
             <p class = 'menuItem'>Team 1 Color:</p>
@@ -325,6 +326,10 @@
                 <button class = 'arrow menuItem button' style = 'width: inherit; width: 39%; margin-right: 0%;' id = 'color1left'><</button>
                 <button class = 'arrow menuItem button' style = 'width: inherit; width: 39%;' id = 'color1right'>></button>
             </div>
+						<p class = 'menuItem'>Or RGB:</p>
+						<input class = 'inputBox menuItem' style = 'width: inherit; width: 82%;' value = '' id = 'redInput1' placeholder = 'Red'>
+						<input class = 'inputBox menuItem' style = 'width: inherit; width: 82%;' value = '' id = 'blueInput1' placeholder = 'Blue'>
+						<input class = 'inputBox menuItem' style = 'width: inherit; width: 82%;' value = '' id = 'greenInput1' placeholder = 'Green'>
 
             <p class = 'menuItem'>Team 1 Text Color:</p>
 
@@ -342,6 +347,10 @@
                 <button class = 'arrow menuItem button' style = 'width: inherit; width: 39%; margin-right: 0%;' id = 'color2left'><</button>
                 <button class = 'arrow menuItem button' style = 'width: inherit; width: 39%;' id = 'color2right'>></button>
             </div>
+						<p class = 'menuItem'>Or RGB:</p>
+						<input class = 'inputBox menuItem' style = 'width: inherit; width: 82%;' value = '' id = 'redInput2' placeholder = 'Red'>
+						<input class = 'inputBox menuItem' style = 'width: inherit; width: 82%;' value = '' id = 'blueInput2' placeholder = 'Blue'>
+						<input class = 'inputBox menuItem' style = 'width: inherit; width: 82%;' value = '' id = 'greenInput2' placeholder = 'Green'>
 
             <p class = 'menuItem'>Team 2 Text Color:</p>
 
@@ -350,15 +359,16 @@
                 <button class = 'arrow menuItem button' style = 'width: inherit; width: 39%;' id = 'textcolor2right'>></button>
             </div>
 
-            <button class = 'button menuItem' id = 'resetColors' style = 'margin-top: 35px; background-color: red;'>Reset Colors</button>
-            <button class = 'button menuItem' id = 'resetStats' style = 'background-color: red;'>Reset Stats</button>
 						<p class = 'menuItem'>Background Brightness:</p>
 						<p class = 'menuItem'>(0 - 255)</p>
 						<input class = 'inputBox menuItem' style = 'width: inherit; width: 82%;' value = '210' id = 'bgColorInput' placeholder = '0 - 255'>
+						
+            <button class = 'button menuItem' id = 'resetColors' style = 'margin-top: 35px; background-color: red;'>Reset Colors</button>
+            <button class = 'button menuItem' id = 'resetStats' style = 'background-color: red;'>Reset Stats</button>
         </div>
 
         <div class = 'container'>
-            <div class = 'team1'>
+            <div class = 'team1' style = 'overflow: hidden;'>
                 <span class = 'span' style = 'position: relative; top: 5px; font-size: 30px; color: var(--txtcolor1);' id = 'team1text'>Team 1</span>
                 <span class = 'team1Points span' style = 'font-size: 50px; text-align: center; display: block; margin-top: 30px; color: var(--txtcolor1);'>0</span>
                 <div class = 'timeoutCountArea' style = 'margin-top: 40px; display: flex; flex-direction: left; align-items: center; width: inherit;'>
@@ -813,15 +823,68 @@
                     let team = parseInt(button.getAttribute('team'));
                     let value = parseInt(button.getAttribute('valueee'));
                     if (button.getAttribute('team') == '1') {
-                        team1points += value;
+                        team1points += value;												
+												
+												if (value == 3) {
+														setTimeout(function() {
+																pointsTeam1.style.transform = 'scale(0)';
+																pointsTeam1.style.transition = 'transform 0.25s ease';
+														
+																}, 1)
+
+																setTimeout(function() {
+																		pointsTeam1.style.transform = 'scale(1.5)';
+																		pointsTeam1.style.transition = 'transform 0.25s ease';
+																		pointsTeam1.textContent = '+' + value;
+																}, 251)
+
+																setTimeout(function() {
+																		pointsTeam1.style.transform = 'scale(0)';
+																		pointsTeam1.style.transition = 'transform 0.25s ease';
+																}, 501)
+
+																setTimeout(function() {
+																		pointsTeam1.style.transform = 'scale(1)';
+																		pointsTeam1.style.transition = 'transform 0.25s ease';
+																		pointsTeam1.textContent = team1points;
+																}, 751)
+												} else {
+														pointsTeam1.textContent = team1points;
+												}
+												
                         action(['points', 1, value]);
                     } else {
                         team2points += value;
+												
+												if (value == 3) {
+														setTimeout(function() {
+																pointsTeam2.style.transform = 'scale(0)';
+																pointsTeam2.style.transition = 'transform 0.25s ease';
+														
+																}, 1)
+
+																setTimeout(function() {
+																		pointsTeam2.style.transform = 'scale(1.5)';
+																		pointsTeam2.style.transition = 'transform 0.25s ease';
+																		pointsTeam2.textContent = '+' + value;
+																}, 251)
+
+																setTimeout(function() {
+																		pointsTeam2.style.transform = 'scale(0)';
+																		pointsTeam2.style.transition = 'transform 0.25s ease';
+																}, 501)
+
+																setTimeout(function() {
+																		pointsTeam2.style.transform = 'scale(1)';
+																		pointsTeam2.style.transition = 'transform 0.25s ease';
+																		pointsTeam2.textContent = team2points;
+																}, 751)
+												} else {
+														pointsTeam2.textContent = team2points;
+												}
+												
                         action(['points', 2, value]);
                     }
-                    
-                    pointsTeam1.textContent = team1points;
-                    pointsTeam2.textContent = team2points;
 
                     addPointsToScoreboard(team, value);
                 })
@@ -984,6 +1047,38 @@
             const color1lright = document.getElementById('color1lright');
             const textcolor1left = document.getElementById('textcolor1left');
             const textcolor1right = document.getElementById('textcolor1right');
+						
+						let redInput1 = document.getElementById('redInput1');
+						let blueInput1 = document.getElementById('blueInput1');
+						let greenInput1 = document.getElementById('greenInput1');
+						
+						let colorInputs1 = [redInput1, blueInput1, greenInput1]
+						
+						for (let colorInput1 of colorInputs1) {
+								colorInput1.addEventListener('input', function() {
+										if (redInput1.value == '' || blueInput1.value == '' || greenInput1.value == '') {
+												return;
+										}
+										root.style.setProperty('--color1', `rgb(${redInput1.value}, ${blueInput1.value}, ${greenInput1.value})`);
+                		resetDarkColors();
+								})
+						}
+						
+						let redInput2 = document.getElementById('redInput2');
+						let blueInput2 = document.getElementById('blueInput2');
+						let greenInput2 = document.getElementById('greenInput2');
+						
+						let colorInputs2 = [redInput2, blueInput2, greenInput2]
+						
+						for (let colorInput2 of colorInputs2) {
+								colorInput2.addEventListener('input', function() {
+										if (redInput2.value == '' || blueInput2.value == '' || greenInput2.value == '') {
+												return;
+										}
+										root.style.setProperty('--color2', `rgb(${redInput2.value}, ${blueInput2.value}, ${greenInput2.value})`);
+                		resetDarkColors();
+								})
+						}
 
             const colors = [
                 // Neutrals
@@ -1129,7 +1224,7 @@
                 textColorIndex1 = 0;
                 curColorIndex1 = 5;
                 textColorIndex2 = 0;
-                curColorIndex2 = 23;
+                curColorIndex2 = 24;
                 root.style.setProperty('--color1', colors[curColorIndex1]);
                 root.style.setProperty('--txtcolor1', textColors[textColorIndex1]);
                 root.style.setProperty('--color2', colors[curColorIndex2]);
